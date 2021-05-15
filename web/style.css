@@ -1,0 +1,74 @@
+body {
+  background-color: white; //powderblue;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#titlebar {
+  margin-bottom: 10px;
+}
+
+#titletext {
+  color: powderblue;
+  font-size: 40px;
+  //background-color: red;
+
+}
+
+#logo {
+  //background-color: green;
+  width: 110px;
+  float: left;
+}
+
+#main-part {
+  justify-content: center;
+  align-items: center;
+  max-width: 500;
+  background-color: white;
+
+}
+
+#thumbnail {
+  width: 100%;
+}
+
+#statusbar {
+  width: 100%;
+  text-align: right;
+}
+
+#stop {
+  color: red;
+  cursor: pointer;
+}
+
+#go {
+  color: green;
+  cursor: pointer;
+}
+
+.badbar {
+  background-color: red;
+  color: white;
+  display: none;
+}
+
+.goodbar {
+  background-color: powderblue;
+}
+
+#state0 {
+  display: none;
+}
+
+#state1 {
+  display: none;
+}
+
+#state2 {
+  display: block;
+}

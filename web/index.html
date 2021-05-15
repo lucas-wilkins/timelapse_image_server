@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Timelapse Control</title>
+        <link rel="shortcut icon" type="image/png" href="/favicon_render_small.png"/>
+        <link rel="stylesheet" href="style.css"/>
+        <script type="text/javascript" src="update.js"></script>
+    </head>
+    <body>
+        <div id="main-part">
+            <div id="titlebar">
+                <div id="logo"><img src="favicon_render_small.png" width="100px"/></div>
+                <div id="titletext">Timelapse Control</div>
+            </div>
+            <div id="thumbnail-outer">
+                <img id="thumbnail" src="thumb-nocache.png"/>
+            </div>
+            <div id="statusbar">
+                <div class="badbar" id="state-2">CONNECTION ERROR &nbsp;</div>
+                <div class="badbar" id="state-1">CAMERA ERROR &nbsp;</div>
+                <div class="goodbar" id="state0">Paused <span id="go" onclick="setStatus(1);">[go]</span> &nbsp;</div>
+                <div class="goodbar" id="state1">Running <span id="stop" onclick="setStatus(0);">[stop]</span> &nbsp;</div>
+                <div class="goodbar" id="state2">Initialising... &nbsp;</div>
+            </div>
+        </div>
+    </body>
+</html>
