@@ -15,6 +15,7 @@ fi
 
 cp -r web $RAMDISK
 
+chmod 777 $RAMDISK/web
 
 # Start the timelapse system, and get its PID so that it can be tracked by the webserver
 #TIMELAPSE_PROCESS=$(sh -c 'echo $$; exec python3 timelapse.py -n"thumb-nocache.png')

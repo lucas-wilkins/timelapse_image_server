@@ -19,21 +19,21 @@ window.onload = function() {
         refreshStatusbar();
         //document.getElementById("statusbar").innerHTML = this.responseText;
 
-        console.log("CGI Response:", this.responseText)
+        //console.log("CGI Response:", this.responseText)
 
     }
 
     // This will happen when timeouts are hit, not seen this yet
     xhttp.ontimeout = function (e) {
         status = -2;
-        console.log("Timeout error");
+        //console.log("Timeout error");
         refreshStatusbar();
     };
 
     // This will happen when the server connection is lost
     xhttp.onerror = function (e){
         status = -2;
-        console.log("Unknown error");
+        //console.log("Unknown error");
         refreshStatusbar();
     };
 

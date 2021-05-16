@@ -1,6 +1,11 @@
 # timelapse_image_server
 Basic HTTP server controlled timelapse system for a raspberry pi
 
+Security
+========
+
+This web server is not intended to be web-facing, so its security has not been checked. Furthermore, it uses python's
+SimpleHTTPServer classes, which themselves come with a warning about
 
 
 Setting up a Ram Disk
@@ -26,4 +31,4 @@ To mount it immediately without reboot:
 
 ``sudo mount -a``
 
-Use ``x-gvfs-show`` to check.
+Use ``mount`` to check.

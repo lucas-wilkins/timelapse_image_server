@@ -86,7 +86,7 @@ def run_enabled():
     else:
         try:
             with open(command_file, 'r') as fid:
-                return fid.readline().strip() == "1"
+                return fid.readline().strip() == "active"
         except Exception as e:
             #print("Read failed:", e.args)
             return True
