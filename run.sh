@@ -6,6 +6,8 @@
 
 RAMDISK="/tmp/ramdisk"
 
+# Copy files over
+
 if [ -d "$RAMDISK" ]; then
   echo "Copying files to ${RAMDISK}..."
 else
@@ -14,13 +16,19 @@ else
 fi
 
 cp -r web $RAMDISK
-
 chmod 777 $RAMDISK/web
 
-# Start the timelapse system, and get its PID so that it can be tracked by the webserver
-#TIMELAPSE_PROCESS=$(sh -c 'echo $$; exec python3 timelapse.py -n"thumb-nocache.png')
+# Start timelapse system
 
-# Start the webserver
-#cd webcontrol || exit
-#python3 webserver.py "$TIMELAPSE_PROCESS"
+python3 timelapse.py -s"/tmp/ramdisk/web" -t${2:-10} $1 &
+
+echo "Timelapse PID $!"
+
+location=$(pwd)
+cd /tmp/ramdisk || exit
+python3 $location/webserver.py &
+
+cd $location || exit
+
+echo "Server PID $!"
 

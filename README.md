@@ -11,7 +11,7 @@ Some effort has been put into assuring accurate timings for the timelapse,
 and the system records both the time at which a photo is taken and 
 
 Dependencies
-============
+------------
 
 * python3
 * python3-opencv
@@ -19,18 +19,37 @@ Dependencies
 * python3-numpy
 
 
-Security
-========
 
-This web server is **not intended to be web-facing**, so its security has not been checked. Furthermore, it uses python's
-SimpleHTTPServer classes, which themselves come with a warning about their unchecked security.
+General
+=======
+
+To record a timelapse without the webserver, all that is needed is timelapse.py.
+There is a command line option (-v) that will show a preview window if an x-server is present.
+
+Getting Camera Resolutions
+--------------------------
+
+TODO
+
+GPU Memory and HQ Pi Camera
+---------------------------
+
+The highest resolutions of the new "high quality" raspberry pi camera require quite 
+a substantial amount of graphics memory, at least 256GB, if not 512GB will need to 
+be assigned to use them. This can be done via `raspi-config`.
 
 Dedicated Pi Setup
 ==================
 
+Security Note
+-------------
+
+This web server is **not intended to be web-facing**, so its security has not been checked. Furthermore, it uses python's
+SimpleHTTPServer classes, which themselves come with a warning about their unchecked security.
 
 `run.sh` will copy the files, found in the `web` sub-directory or this repository,
 into the ramdisk when it is run, and start the various processes. This is because of the repeated writing of a single file.
+
 
 Setting up a Ram Disk
 ---------------------
@@ -63,7 +82,7 @@ Use ``mount`` to check.
 
 
 Starting Paused or Active
-=========================
+-------------------------
 
 When controlled from the webserver `timelapse.py` looks at 
  `/tmp/ramdisk/web/status.txt` (by default). 
