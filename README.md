@@ -18,7 +18,7 @@ make sure it has the right access setup
 
 ``sudo vim /etc/fstab``
 
-and adding an entry like this, the ``5m`` refers to the 5MB of RAM, which should be more than sufficient:
+and adding an entry like this, the ``5m`` refers to 5MB of RAM, which should be more than sufficient:
 
 ``ramdisk0  /tmp/ramdisk  tmpfs  defaults,size=5m,x-gvfs-show  0  0``
 
@@ -26,4 +26,4 @@ To mount it immediately without reboot:
 
 ``sudo mount -a``
 
-Use ``mount`` on its own to check its mounted.
+Use ``x-gvfs-show`` to check.
