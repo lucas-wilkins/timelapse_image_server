@@ -19,6 +19,10 @@ parser.add_argument("--disable_write", help="disable writing of timelapse data",
 parser.add_argument("--camera_index", "-c", help="index of camera device (-1 for fake)", type=int, default=0)
 args = parser.parse_args()
 
+if args.server_root is not None:
+    with open(os.path.join(args.server_root, "../pid.txt"), 'w') as fid:
+        fid.write(str(os.getpid()))
+
 # Filename checking stuff
 if not os.path.exists(args.image_location):
     os.mkdir(args.image_location)
@@ -68,17 +72,25 @@ image_counter += 1
 
 metadata_filename = "meta_%s.csv"%(time.strftime("%Y-%m-%d_%H-%M-%S"))
 
+thumbnail_file = None if args.server_root is None else os.path.join(args.server_root, "thumb-nocache.png")
+command_file = None if args.server_root is None else os.path.join(args.server_root, "status.txt")
+
+
 # We show a first image before the timelapse begins,
 #  because it seems that displaying the window
 #  causes significant lag
-if args.view_image:
+if args.view_image or thumbnail_file is not None:
+
     ret, frame = cap.read()
     small = cv2.resize(frame, (args.thumb_width, args.thumb_height))
-    cv2.imshow("Timelapse", small)
-    cv2.waitKey(1)
 
-thumbnail_file = None if args.server_root is None else os.path.join(args.server_root, "thumb-nocache.png")
-command_file = None if args.server_root is None else os.path.join(args.server_root, "status.txt")
+    if args.view_image:
+        cv2.imshow("Timelapse", small)
+        cv2.waitKey(1)
+
+    if thumbnail_file is not None:
+        cv2.imwrite(thumbnail_file, small)
+
 
 def run_enabled():
     if command_file is None:

@@ -17,23 +17,18 @@ window.onload = function() {
         }
 
         refreshStatusbar();
-        //document.getElementById("statusbar").innerHTML = this.responseText;
-
-        //console.log("CGI Response:", this.responseText)
 
     }
 
     // This will happen when timeouts are hit, not seen this yet
     xhttp.ontimeout = function (e) {
         status = -2;
-        //console.log("Timeout error");
         refreshStatusbar();
     };
 
     // This will happen when the server connection is lost
     xhttp.onerror = function (e){
         status = -2;
-        //console.log("Unknown error");
         refreshStatusbar();
     };
 
@@ -57,16 +52,22 @@ window.onload = function() {
             divtag.style.display = "none";
         }
 
-        //console.log(status);
-
         refreshStatusbar();
-
 
         xhttp.open("GET", "status.txt", true);
         xhttp.timeout = 1000;
         xhttp.send();
 
     }, 1000);
+
+
+    var checkStatus = function(statusValue) {
+        xhttp.open("POST", "/cgi-bin/status.py", true);
+        xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhttp.send();
+    };
+
+    setInterval(checkStatus, 2000);
 };
 
 
@@ -75,3 +76,5 @@ var setStatus = function(statusValue) {
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhttp.send("state=".concat(statusValue));
 };
+
+
