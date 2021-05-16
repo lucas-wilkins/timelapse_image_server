@@ -5,10 +5,12 @@ A basic HTTP server controlable timelapse system for a Raspberry Pi.
 
 This code provides a timelapse system that can either be run as a standalone 
 program (timelapse.py) or integrated into a standalone system that can be 
-started and stopped remotely via a web-app. 
+started and stopped remotely via a web-app. For more critical applications,
+it is advisable to run the server when the pi is started.
 
 Some effort has been put into assuring accurate timings for the timelapse, 
-and the system records both the time at which a photo is taken and 
+and the system records the time at which a photo is taken along with when 
+the capture ended and other timing information.
 
 Dependencies
 ------------
@@ -18,18 +20,35 @@ Dependencies
 * python3-psutil
 * python3-numpy
 
-
-
 General
 =======
 
 To record a timelapse without the webserver, all that is needed is timelapse.py.
 There is a command line option (-v) that will show a preview window if an x-server is present.
 
+Files are numerically identified, and added sequentially to a specified 
+directory. There is a single  `.csv` file with timing data for each run.
+
+
+Disable Wifi Sleeping
+---------------------
+
+The default settings on a raspberry pi is that the wifi card will go into 
+low-power mode after a period of time, and thus turn off. This can be
+a problem when using it for timelapses you wont be able to log in, or check
+with the webserver. To disable this, do:
+
+`sudo iw wlan0 set power_save off`
+
+and it can be checked with
+
+`iw wlan0 get power_save`
+
+
 Getting Camera Resolutions
 --------------------------
 
-TODO
+A script to list camera resolutions will be added soon.
 
 GPU Memory and HQ Pi Camera
 ---------------------------
@@ -47,12 +66,12 @@ Security Note
 This web server is **not intended to be web-facing**, so its security has not been checked. Furthermore, it uses python's
 SimpleHTTPServer classes, which themselves come with a warning about their unchecked security.
 
-`run.sh` will copy the files, found in the `web` sub-directory or this repository,
-into the ramdisk when it is run, and start the various processes. This is because of the repeated writing of a single file.
-
 
 Setting up a Ram Disk
 ---------------------
+
+`run.sh` will copy the files, found in the `web` sub-directory or this repository,
+into the ramdisk when it is run, and start the various processes. This is because of the repeated writing of a single file.
 
 It's best to run the image server from a ramdisk, so save reading and writing to the SD card.
 The ramdisk doesn't need to be that big (typical sizes have been 150kB).
@@ -79,6 +98,11 @@ To mount it immediately without reboot:
 ``sudo mount -a``
 
 Use ``mount`` to check.
+
+Configuring a Timelapse
+-----------------------
+
+
 
 
 Starting Paused or Active
