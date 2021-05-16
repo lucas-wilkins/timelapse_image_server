@@ -62,7 +62,7 @@ window.onload = function() {
         refreshStatusbar();
 
 
-        xhttp.open("GET", "/cgi-bin/status.py", true);
+        xhttp.open("GET", "status.txt", true);
         xhttp.timeout = 1000;
         xhttp.send();
 
@@ -71,6 +71,7 @@ window.onload = function() {
 
 
 var setStatus = function(statusValue) {
-    xhttp.open("POST", "/cgi-bin/status.py?state=".concat(statusValue), true);
-    xhttp.send();
+    xhttp.open("POST", "/cgi-bin/status.py", true);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send("state=".concat(statusValue));
 };

@@ -21,7 +21,7 @@ class EsotericHandler(CGIHTTPRequestHandler):
         super().end_headers()
 
     def no_cache_options(self):
-        if self.path.endswith("-nocache.png") or self.path.endswith("status"):
+        if self.path.endswith("-nocache.png") or "status.txt" in self.path:
             self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
             self.send_header("Pragma", "no-cache")
             self.send_header("Expires", "0")

@@ -1,3 +1,5 @@
+#!/bin/env python3
+
 import os
 import sys
 import cgi
@@ -6,22 +8,20 @@ form = cgi.FieldStorage()
 
 # If there are args provided, set the value
 if "state" in form:
-    target = form["state"]
-
-    if target == "1":
-        os.environ["DO_TIMELAPSE"] = "1"
-
-    elif target == "0":
-        os.environ["DO_TIMELAPSE"] = "0"
-
-# Check process with specified ID somehow
+    target = form["state"].value
 
 
-# Check the environment variable
-status = "active"
-if "DO_TIMELAPSE" in os.environ:
-    if os.environ["DO_TIMELAPSE"] == "0":
-        print("paused")
+    with open("web/status.txt", 'w') as fid:
 
-print("Content-type:text/plain\r\n\r\n")
-print(status)
+        if target == "1":
+            fid.write("active")
+
+        elif target == "0":
+            fid.write("paused")
+
+        else:
+            pass
+            #fid.write(str(form["state"]))
+
+#print("Content-type:text/plain\r\n\r\n")
+#print(status)

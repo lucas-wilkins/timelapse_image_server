@@ -26,4 +26,4 @@ To mount it immediately without reboot:
 
 ``sudo mount -a``
 
-Use ``x-gvfs-show`` to check.
+Use ``mount`` on its own to check its mounted.
