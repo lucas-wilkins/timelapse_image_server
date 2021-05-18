@@ -138,9 +138,9 @@ Now to try and mount it. If it is already be mounted. Unmount it with
 Mounting will need a 
 
 The user pi will have a UID and GID of 1000 by default on many Raspian editions.
-To put an entry into ``fstab`` you will need to know the UUID for the partition you are mounting.
+To put an entry into ``fstab`` you will need to know the PARTUUID for the partition you are mounting.
 
-Get the UUID with 
+Get the PARTUUID with 
 
 ```sudo blkid```
 
@@ -156,7 +156,7 @@ but this time we want a specific id, and we'll add some useful extra options.
 * ``nofail`` - Pi will boot if drive isn't there (+usability)
 
 ```
-UUID=[insert UUID here!] /mnt/external_hdd vfat async,noatime,nodiratime,nofail,uid=1000,gid=1000,umask=007 0 0
+PARTUUID=[insert UUID here!] /mnt/external_hdd vfat async,noatime,nodiratime,nofail,uid=1000,gid=1000,umask=007 0 0
 ```
 
 Configuring a Timelapse
