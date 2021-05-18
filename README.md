@@ -22,10 +22,10 @@ Dependencies
 
 Don't forget to update and upgrade everything (this will help many things, including keeping the pi cool if using a pi 4)
 
-``
+```
 sudo apt update
 sudo apt full-upgrade
-``
+```
 
 
 General
@@ -97,10 +97,10 @@ make sure it has the right access setup
 We can then put an entry in fstab, it is good practice to make a backup of these files when editing them
 
 
-``
+```
 sudo cp /etc/fstab /etc/fstab.backup
 sudo vim /etc/fstab
-``
+```
 
 and adding an entry like this, the ``5m`` refers to 5MB of RAM, which should be more than sufficient:
 
@@ -120,10 +120,10 @@ It is likely that you'll be recording onto an external hard disk. In order to ha
 
 First of all you need a directory as a mount point, I have chosen  `/mnt/external_hdd` so
 
-``
+```
 sudo mkdir /mnt/external_hdd
 sudo chmod 777 /mnt/external_hdd
-``
+```
 
 You also need to know what kind of file system it has, you can find this out `file`.
 On my system the external disk is `/dev/sda` and the partition is `/dev/sda1`. 
