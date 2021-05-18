@@ -46,11 +46,11 @@ low-power mode after a period of time, and thus turn off. This can be
 a problem when using it for timelapses you wont be able to log in, or check
 with the webserver. To disable this, do:
 
-`sudo iw wlan0 set power_save off`
+```sudo iw wlan0 set power_save off```
 
 and it can be checked with
 
-`iw wlan0 get power_save`
+```iw wlan0 get power_save```
 
 
 Getting Camera Resolutions
@@ -88,11 +88,11 @@ We can make a ramdisk appear on boot by doing (This uses vim which will need ins
 Create a location for it if it doesn't exist. The code here assumes that this location is `/tmp/ramdisk`,
 a different location can be specified through `$RAMDISK` in `run.sh`.
 
-``sudo mkdir /tmp/ramdisk``
+```sudo mkdir /tmp/ramdisk```
 
 make sure it has the right access setup
 
-``sudo chmod 777 /tmp/ramdisk``
+```sudo chmod 777 /tmp/ramdisk```
 
 We can then put an entry in fstab, it is good practice to make a backup of these files when editing them
 
@@ -104,13 +104,13 @@ sudo vim /etc/fstab
 
 and adding an entry like this, the ``5m`` refers to 5MB of RAM, which should be more than sufficient:
 
-``ramdisk0  /tmp/ramdisk  tmpfs  defaults,size=5m,x-gvfs-show  0  0``
+```ramdisk0  /tmp/ramdisk  tmpfs  defaults,size=5m,x-gvfs-show  0  0```
 
 To mount it immediately without reboot:
 
-``sudo mount -a``
+```sudo mount -a```
 
-Use ``mount`` to check.
+Use ```mount``` to check.
 
 
 Mounting a Hard Disk on Start Up
@@ -129,11 +129,11 @@ You also need to know what kind of file system it has, you can find this out `fi
 On my system the external disk is `/dev/sda` and the partition is `/dev/sda1`. 
 So I type
 
-``sudo file /dev/sda1``
+```sudo file /dev/sda1```
 
 Now to try and mount it. If it is already be mounted. Unmount it with
 
-``sudo umount /dev/sda1``
+```sudo umount /dev/sda1```
 
 Mounting will need a 
 
@@ -142,11 +142,11 @@ To put an entry into ``fstab`` you will need to know the UUID for the partition 
 
 Get the UUID with 
 
-``sudo blkid``
+```sudo blkid```
 
 First try and mount it without putting anything in fstab
 
-``sudo mount -t vfat -o nofail,uid=1000,gid=1000 /dev/sda1 /mnt/external_hdd/``
+```sudo mount -t vfat -o nofail,uid=1000,gid=1000 /dev/sda1 /mnt/external_hdd/```
 
 Assuming that this is successful add to fstab much like the ramdisk above, 
 but this time we want a specific id, and we'll add some useful extra options.
