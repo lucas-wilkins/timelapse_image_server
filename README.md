@@ -20,6 +20,14 @@ Dependencies
 * python3-psutil
 * python3-numpy
 
+Don't forget to update and upgrade everything (this will help many things, including keeping the pi cool if using a pi 4)
+
+``
+sudo apt update
+sudo apt full-upgrade
+``
+
+
 General
 =======
 
@@ -66,7 +74,6 @@ Security Note
 This web server is **not intended to be web-facing**, so its security has not been checked. Furthermore, it uses python's
 SimpleHTTPServer classes, which themselves come with a warning about their unchecked security.
 
-
 Setting up a Ram Disk
 ---------------------
 
@@ -87,7 +94,13 @@ make sure it has the right access setup
 
 ``sudo chmod 777 /tmp/ramdisk``
 
-``sudo vim /etc/fstab``
+We can then put an entry in fstab, it is good practice to make a backup of these files when editing them
+
+
+``
+sudo cp /etc/fstab /etc/fstab.backup
+sudo vim /etc/fstab
+``
 
 and adding an entry like this, the ``5m`` refers to 5MB of RAM, which should be more than sufficient:
 
@@ -99,14 +112,59 @@ To mount it immediately without reboot:
 
 Use ``mount`` to check.
 
+
+Mounting a Hard Disk on Start Up
+--------------------------------
+
+It is likely that you'll be recording onto an external hard disk. In order to have the system start when the hard disk mounted, the appropriate entry will need to be put into fstab.
+
+First of all you need a directory as a mount point, I have chosen  `/mnt/external_hdd` so
+
+``
+sudo mkdir /mnt/external_hdd
+sudo chmod 777 /mnt/external_hdd
+``
+
+You also need to know what kind of file system it has, you can find this out `file`.
+On my system the external disk is `/dev/sda` and the partition is `/dev/sda1`. 
+So I type
+
+``sudo file /dev/sda1``
+
+Now to try and mount it. If it is already be mounted. Unmount it with
+
+``sudo umount /dev/sda1``
+
+Mounting will need a 
+
+The user pi will have a UID and GID of 1000 by default on many Raspian editions.
+To put an entry into ``fstab`` you will need to know the UUID for the partition you are mounting.
+
+Get the UUID with 
+
+``sudo blkid``
+
+First try and mount it without putting anything in fstab
+
+``sudo mount -t vfat -o nofail,uid=1000,gid=1000 /dev/sda1 /mnt/external_hdd/``
+
+Assuming that this is successful add to fstab much like the ramdisk above, 
+but this time we want a specific id, and we'll add some useful extra options.
+
+* ``noatime`` and ``nodiratime`` - Don't record last access time (+speed)
+* ``async`` - Reduces number of flushes (+speed, +disk lifetime)
+* ``nofail`` - Pi will boot if drive isn't there (+usability)
+
+```
+UUID=[insert UUID here!] /mnt/external_hdd vfat async,noatime,nodiratime,nofail,uid=1000,gid=1000,umask=007 0 0
+```
+
 Configuring a Timelapse
 -----------------------
 
 
-
-
 Starting Paused or Active
--------------------------
++++++++++++++++++++++++++
 
 When controlled from the webserver `timelapse.py` looks at 
  `/tmp/ramdisk/web/status.txt` (by default). 
