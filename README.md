@@ -163,8 +163,7 @@ Configuring a Timelapse
 -----------------------
 
 
-Starting Paused or Active
-+++++++++++++++++++++++++
+### Starting Paused or Active
 
 When controlled from the webserver `timelapse.py` looks at 
  `/tmp/ramdisk/web/status.txt` (by default). 
