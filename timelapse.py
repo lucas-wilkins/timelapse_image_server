@@ -1,5 +1,8 @@
 #!/bin/env python3
 
+""" Responsible for controlling the camera in a timelapse. 
+It works as a standalone, but can also integrate with webserver.py """ 
+
 import os
 import argparse
 import cv2
