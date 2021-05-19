@@ -7,8 +7,8 @@ This code provides a time lapse system that can either be run as a standalone
 program (timelapse.py) or as a system that can be 
 started and stopped remotely via a web-app. 
 
-When set up properly (see below) it should restart automatically after power failures 
-It should keep recording as long as there is hard disk space.
+When set up properly (see below) it should restart automatically after power failures and
+it should keep recording as long as there is hard disk space.
 
 Some effort has been put into assuring accurate timings for the timelapse, 
 and the system records the time at which a photo is taken along with when 
