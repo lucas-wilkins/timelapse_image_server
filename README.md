@@ -53,11 +53,6 @@ and it can be checked with
 ```iw wlan0 get power_save```
 
 
-Getting Camera Resolutions
---------------------------
-
-A script to list camera resolutions will be added soon.
-
 GPU Memory and HQ Pi Camera
 ---------------------------
 
@@ -67,6 +62,13 @@ be assigned to use them. This can be done via `raspi-config`.
 
 Dedicated Pi Setup
 ==================
+
+Once everything below is set up, the whole system can be run with `run.sh`, 
+as it is a webserver on port 80 it will need root access this will need to be run as root.
+
+```
+sudo bash run.sh
+```
 
 Security Note
 -------------
@@ -158,6 +160,33 @@ but this time we want a specific id, and we'll add some useful extra options.
 ```
 PARTUUID=[insert UUID here!] /mnt/external_hdd vfat async,noatime,nodiratime,nofail,uid=1000,gid=1000,umask=007 0 0
 ```
+
+Running on startup
+------------------
+
+To make the timelapse system start automatically, add it via `crontab`. 
+The server needs to be run as root, so we need to edit crontab as root.
+
+```
+sudo crontab -e
+```
+
+This will bring up an editor. Assuming this repository is cloned into user pi's home,  add the line
+
+```
+@reboot bash /home/pi/timelapse_image_server &
+```
+
+Save and exit, and when you boot next the timelapse and server should run automatically.
+
+Halting the Timelapse or Webserver
+----------------------------------
+
+There are two python scripts that can easily stop the timelapse and webcam processes, 
+even when run from cron. 
+These are `kill_webserver.py` and `kill_timelapse.py`.
+Use `python3 kill_webserver.py` or `python3 kill_timelapse.py` to search for the processes
+and kill them automatically.
 
 Configuring a Timelapse
 -----------------------
