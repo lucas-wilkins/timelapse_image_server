@@ -1,3 +1,8 @@
+""" Simple webserver that allows control of the timelapse.
+
+It is modifed to instruct a the browser not to cache the images or status.txt messages.
+
+"""
 
 from http.server import CGIHTTPRequestHandler
 from socketserver import TCPServer
@@ -19,7 +24,6 @@ class EsotericHandler(CGIHTTPRequestHandler):
 
     def no_cache_options(self):
         if self.path.endswith("-nocache.png") or self.path.endswith("status.txt"):
-            #print("attaching no cache header to request for",self.path)
             self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
             self.send_header("Pragma", "no-cache")
             self.send_header("Expires", "0")
