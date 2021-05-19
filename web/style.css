@@ -72,3 +72,11 @@ body {
 #state2 {
   display: block;
 }
+
+#state3 {
+  display: none;
+}
+
+#state4 {
+  display: none;
+}

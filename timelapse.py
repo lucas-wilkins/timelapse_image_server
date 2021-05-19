@@ -1,3 +1,5 @@
+#!/bin/env python3
+
 import os
 import argparse
 import cv2
@@ -73,11 +75,10 @@ image_counter += 1
 metadata_filename = "meta_%s.csv"%(time.strftime("%Y-%m-%d_%H-%M-%S"))
 
 thumbnail_file = None if args.server_root is None else os.path.join(args.server_root, "thumb-nocache.png")
-command_file = None if args.server_root is None else os.path.join(args.server_root, "status.txt")
-
+command_files = None if args.server_root is None else (os.path.join(args.server_root, "status.txt"), os.path.join(args.server_root, "desired-status.txt"))
 
 # We show a first image before the timelapse begins,
-#  because it seems that displaying the window
+#  because it seems that starting the window
 #  causes significant lag
 if args.view_image or thumbnail_file is not None:
 
@@ -92,16 +93,29 @@ if args.view_image or thumbnail_file is not None:
         cv2.imwrite(thumbnail_file, small)
 
 
-def run_enabled():
-    if command_file is None:
+def target_run_state():
+    if command_files is None:
         return True
     else:
         try:
-            with open(command_file, 'r') as fid:
+            with open(command_files[1], 'r') as fid:
                 return fid.readline().strip() == "active"
         except Exception as e:
             #print("Read failed:", e.args)
             return True
+
+def run_enabled():
+    target_state = target_run_state()
+
+    if command_files is not None:
+        with open(command_files[0], 'w') as fid:
+            if target_state:
+                fid.write("active")
+            else:
+                fid.write("paused")
+
+
+    return target_state
 
 time_gap = args.timestep
 time_zero = time.time()

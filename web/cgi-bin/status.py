@@ -4,27 +4,37 @@ import cgi
 import psutil
 import sys
 
+# Check whether the timelapse script is running 
+
+found = False
+for proc in psutil.process_iter():
+    if proc.name() == "python3":
+        if proc.cmdline()[1].endswith("timelapse.py"):
+            found = True
+
+if not found:
+    with open("web/status.txt", 'w') as fid:
+        fid.write("crashed")
+
+
+# Update the desired state for the timelapse script
+
 form = cgi.FieldStorage()
-
-# If there are args provided, set the value
-
-with open("pid.txt") as fid:
-    pid = int(fid.readline().strip())
-    if not psutil.pid_exists(pid):
-        with open("web/status.txt", 'w') as fid2:
-            fid2.write("crashed")
-        sys.exit()
-
-
 if "state" in form:
     target = form["state"].value
 
 
-    with open("web/status.txt", 'w') as fid:
+    with open("web/desired-status.txt", 'w') as desired_fid:
 
-        if target == "1":
-            fid.write("active")
+    	with open("web/status.txt",'w') as actual_fid:
+            if target == "1":
+                desired_fid.write("active")
+                actual_fid.write("starting")    
 
-        elif target == "0":
-            fid.write("paused")
+            elif target == "0":
+                desired_fid.write("paused")
+                actual_fid.write("pausing")
+
+
+
 

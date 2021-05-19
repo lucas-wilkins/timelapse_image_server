@@ -1,6 +1,6 @@
 
 var xhttp = new XMLHttpRequest();
-var status = 1;
+var status = 2;
 
 window.onload = function() {
     xhttp.onreadystatechange = function() {
@@ -13,8 +13,14 @@ window.onload = function() {
                 status = 0;
             } else if (this.responseText == "crashed") {
                 status = -1;
+            } else if (this.responseText == "starting") {
+                status = 3;
+            } else if (this.responseText == "pausing") {
+                status = 4;
             }
         }
+
+        console.log(this.responseText);
 
         refreshStatusbar();
 
@@ -38,6 +44,8 @@ window.onload = function() {
         document.getElementById("state0").style.display = (status == 0) ? "block" : "none";
         document.getElementById("state1").style.display = (status == 1) ? "block" : "none";
         document.getElementById("state2").style.display = (status == 2) ? "block" : "none";
+        document.getElementById("state3").style.display = (status == 3) ? "block" : "none";
+        document.getElementById("state4").style.display = (status == 4) ? "block" : "none";
 
     };
 
@@ -54,14 +62,16 @@ window.onload = function() {
 
         refreshStatusbar();
 
-        xhttp.open("GET", "status.txt", true);
-        xhttp.timeout = 1000;
+        xhttp.open("GET", "/status.txt", true);
+        //xhttp.timeout = 1000;
         xhttp.send();
+
+	console.log("Sent message!")
 
     }, 1000);
 
 
-    var checkStatus = function(statusValue) {
+    var checkStatus = function() {
         xhttp.open("POST", "/cgi-bin/status.py", true);
         xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhttp.send();
@@ -72,9 +82,20 @@ window.onload = function() {
 
 
 var setStatus = function(statusValue) {
+
+
     xhttp.open("POST", "/cgi-bin/status.py", true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhttp.send("state=".concat(statusValue));
+
+    if (statusValue == 0) {
+        status = 4;
+    } else if (statusValue == 1) { 
+        status = 3;
+    }
+
+    refreshStatusbar();
+
 };
 
 
