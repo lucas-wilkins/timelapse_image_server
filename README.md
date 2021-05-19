@@ -1,16 +1,21 @@
 Timelapse System
 ==================
 
-A basic web controlable timelapse system for a Raspberry Pi.
+A basic web controllable time lapse system for a Raspberry Pi.
 
-This code provides a timelapse system that can either be run as a standalone 
-program (timelapse.py) or integrated into a standalone system that can be 
-started and stopped remotely via a web-app. For more critical applications,
-it is advisable to run the server when the pi is started.
+This code provides a time lapse system that can either be run as a standalone 
+program (timelapse.py) or as a system that can be 
+started and stopped remotely via a web-app. 
+
+When set up properly (see below) it should restart automatically after power failures 
+It should keep recording as long as there is hard disk space.
 
 Some effort has been put into assuring accurate timings for the timelapse, 
 and the system records the time at which a photo is taken along with when 
 the capture ended and other timing information.
+
+The setup is also designed to avoid damaging SSD drives with excessive writing.
+
 
 Dependencies
 ------------
