@@ -1,7 +1,7 @@
 Timelapse System
 ==================
 
-A basic HTTP server controlable timelapse system for a Raspberry Pi.
+A basic web controlable timelapse system for a Raspberry Pi.
 
 This code provides a timelapse system that can either be run as a standalone 
 program (timelapse.py) or integrated into a standalone system that can be 
