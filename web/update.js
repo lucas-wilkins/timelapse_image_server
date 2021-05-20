@@ -20,7 +20,7 @@ window.onload = function() {
             }
         }
 
-        console.log(this.responseText);
+        //console.log(this.responseText);
 
         refreshStatusbar();
 
@@ -66,7 +66,7 @@ window.onload = function() {
         //xhttp.timeout = 1000;
         xhttp.send();
 
-	console.log("Sent message!")
+	//console.log("Sent message!")
 
     }, 1000);
 
