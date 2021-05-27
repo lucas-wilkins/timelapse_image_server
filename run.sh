@@ -5,7 +5,8 @@
 #
 
 RAMDISK="/tmp/ramdisk"
-TIMELAPSEDIR="/mnt/external_hdd/timelapses"
+EXTERNALDISK="/mnt/external_hdd"
+TIMELAPSEDIR="${EXTERNALDISK}/timelapses"
 
 # Copy files over
 
@@ -26,7 +27,13 @@ chmod 777 $RAMDISK/web/cgi-bin/status.py
 # Start timelapse system
 # HQ cam max resolution 3840x2400, it seems to take about 1.5 seconds to read, process and store this, use max 5s.
 # The webserver update looks for a python3 process with a first argument ending in timelapse, don't rename
-python3 ./timelapse.py -x 3840 -y 2400 -s$RAMDISK/web -t5 $TIMELAPSEDIR &
+
+# Only run if disk is mounted (so it doesn't write to SD card instead)
+if grep -qs "${EXTERNALDISK} " /proc/mounts; then
+  python3 ./timelapse.py -x 3840 -y 2400 -s$RAMDISK/web -t5 $TIMELAPSEDIR &
+else
+  echo "External disk not mounted, not running timelapse."
+fi
 
 # Start the server
 location=$(pwd)
