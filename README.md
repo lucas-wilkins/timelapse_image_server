@@ -16,6 +16,18 @@ the capture ended and other timing information.
 
 The setup is also designed to avoid damaging SSD drives with excessive writing.
 
+Hardware
+--------
+
+The hardware used in testing this was:
+* Rapberry Pi 4 (2GB)
+* 8GB SD Card
+* "High Quality" camera
+* C/CS mount lens for high quality camera
+* External, USB, SSD drive (1TB)
+* 3A Raspberry Pi power supply
+* Aluminium heat sink / Pi case
+
 
 Dependencies
 ------------
